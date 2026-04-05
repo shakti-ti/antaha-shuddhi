@@ -1,11 +1,13 @@
 import './App.css'
 
 function App() {
+  const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`
+
   return (
     <div className="page">
       <header className="site-header">
         <div className="brand">
-          <img className="brand-mark" src="/favicon.png" alt="" aria-hidden="true" />
+          <img className="brand-mark" src={withBase('favicon.png')} alt="" aria-hidden="true" />
           <span className="brand-name">Antaha Shuddhi</span>
         </div>
         <nav className="nav">
@@ -103,7 +105,7 @@ Transform your life through the ancient practice of yoga. Join Antaha Shuddhi an
             <article className="trainer-card">
               <img
                 className="trainer-image"
-                src="/nidhi.jpeg"
+                src={withBase('nidhi.jpeg')}
                 alt="Nidhi, yoga trainer"
                 loading="lazy"
               />
@@ -120,7 +122,7 @@ Transform your life through the ancient practice of yoga. Join Antaha Shuddhi an
             <article className="trainer-card">
               <img
                 className="trainer-image"
-                src="/rupesh.jpeg"
+                src={withBase('rupesh.jpeg')}
                 alt="Rupesh, yoga trainer"
                 loading="lazy"
               />
