@@ -1,7 +1,46 @@
 import './App.css'
+import { useState } from 'react'
 
 function App() {
   const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`
+  const [expandedTestimonial, setExpandedTestimonial] = useState<string | null>(null)
+
+  const testimonials = [
+    {
+      id: 'priyanka',
+      name: 'Priyanka Ghosh',
+      image: withBase('priyanka.jpeg'),
+      excerpt: 'Your excellence and deep knowledge of yoga has kept me connected for 6 years.',
+      fullText: `It's been approximately 6 years since I joined your yoga sessions. The reason that has kept me connected to you all these years is your excellence and deep knowledge of yoga. Your sessions are very relaxing and refreshing — you always keep in mind the individual needs of each person in the class and ensure everyone's posture is corrected. You have a keen eye for observation. Your description of each and every point is always clear. You make a deep connection with your students, which makes the sessions not only a yoga and meditation class but also a healing therapy. The meditation and relaxation sessions are always truly refreshing. You are an excellent instructor with deep knowledge. Thank you so much!`
+    },
+    {
+      id: 'jayshree',
+      name: 'Jayshree',
+      image: withBase('jayshree.jpeg'),
+      excerpt: 'You introduced me to a whole new way of living with patience and care.',
+      fullText: `Grateful beyond words for my very first yoga teacher, Nidhi 🙏
+
+You didn't just teach me yoga—you introduced me to a whole new way of living. With so much patience, you guided me through every step, every posture, and helped me truly understand the benefits behind each movement.
+
+Your teachings didn't just change my routine, they reshaped my life—bringing strength, balance, and peace within.
+Forever thankful for your guidance, encouragement, and belief in me, Nidhi. This journey started with you, and it will always hold a special place in my heart ❤️🧘‍♀️`
+    },
+    {
+      id: 'swarnlata',
+      name: 'Swarnlata Morya',
+      image: withBase('swarnlata.jpeg'),
+      excerpt: 'Yoga became a part of my daily life with real changes in health and wellness.',
+      fullText: `With immense patience and kindness, Nidhi teaches me yoga step by step, always explaining not just the "how" but also the "why" behind each practice. Her guidance made me feel comfortable, confident, and motivated, even as a beginner at this stage of life.
+
+Over time, I started seeing real changes. My thyroid issues became more manageable, my weight improved, and I began to feel more active and balanced both physically and mentally. Yoga is no longer just an exercise for me—it's a part of my daily life and well-being. Nidhi connects personally and guides on day to day healthy habits.
+
+I am truly grateful for her dedication, support, and belief that it's never too late to start.`
+    }
+  ]
+
+  const toggleTestimonial = (id: string) => {
+    setExpandedTestimonial(expandedTestimonial === id ? null : id)
+  }
 
   return (
     <div className="page">
@@ -27,8 +66,7 @@ function App() {
             <p className="eyebrow">Antaha Shuddhi</p>
             <h1>Discover Your Inner Peace</h1>
             <p className="subtext">
-              Discover Your Inner Peace
-Transform your life through the ancient practice of yoga. Join Antaha Shuddhi and embark on a journey to wellness, balance, and self-discovery.
+              Transform your life through the ancient practice of yoga. Join Antaha Shuddhi and embark on a journey to wellness, balance, and self-discovery.
             </p>
             <div className="hero-actions">
               <a className="primary" href="#classes">
@@ -167,7 +205,7 @@ Transform your life through the ancient practice of yoga. Join Antaha Shuddhi an
                 loading="lazy"
               />
               <h3>Pranayama (Breathwork)</h3>
-              <p>To calm the mind and energize the body.</p>
+              <p>To calm the mind, balance the nervous system, and restore the body's natural energy.</p>
             </article>
             <article className="card">
               <img
@@ -203,28 +241,33 @@ Transform your life through the ancient practice of yoga. Join Antaha Shuddhi an
             <h2>Client Testimonials</h2>
             <p>Kind words from our students and wellness community.</p>
           </div>
-          <div className="grid">
-            <article className="card">
-              <p className="testimonial-quote">
-                “I joined for flexibility, but stayed for the peace. The
-                sessions helped me manage stress and sleep better.”
-              </p>
-              <p className="testimonial-name">— Ananya, Working Professional</p>
-            </article>
-            <article className="card">
-              <p className="testimonial-quote">
-                “The breathing and meditation practices made a huge difference
-                in my focus and emotional balance.”
-              </p>
-              <p className="testimonial-name">— Rohan, College Student</p>
-            </article>
-            <article className="card">
-              <p className="testimonial-quote">
-                “Their guidance is practical and compassionate. I now have a
-                simple routine that I can actually sustain.”
-              </p>
-              <p className="testimonial-name">— Meera, Homemaker</p>
-            </article>
+          <div className="testimonials-grid">
+            {testimonials.map((testimonial) => (
+              <article
+                key={testimonial.id}
+                className={`testimonial-card ${expandedTestimonial === testimonial.id ? 'expanded' : ''}`}
+              >
+                <img
+                  className="testimonial-image"
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  loading="lazy"
+                />
+                <div className="testimonial-content">
+                  <h3 className="testimonial-name">{testimonial.name}</h3>
+                  <p className="testimonial-text">
+                    {expandedTestimonial === testimonial.id ? testimonial.fullText : testimonial.excerpt}
+                  </p>
+                  <button
+                    className="testimonial-toggle"
+                    onClick={() => toggleTestimonial(testimonial.id)}
+                    aria-expanded={expandedTestimonial === testimonial.id}
+                  >
+                    {expandedTestimonial === testimonial.id ? 'Read Less' : 'Read More'}
+                  </button>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
