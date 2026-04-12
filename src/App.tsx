@@ -2,8 +2,17 @@ import './App.css'
 import { useEffect, useState } from 'react'
 
 function App() {
+  const initialCallbackForm = {
+    name: '',
+    phone: '',
+    email: '',
+    preferredTime: '',
+    enquiry: ''
+  }
   const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`
   const [expandedTestimonial, setExpandedTestimonial] = useState<string | null>(null)
+  const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false)
+  const [callbackForm, setCallbackForm] = useState(initialCallbackForm)
   const heroImages = [
     withBase('gallery/gallery1.jpeg'),
     withBase('gallery/gallery2.jpeg'),
@@ -65,6 +74,34 @@ I am truly grateful for her dedication, support, and belief that it's never too 
       window.clearInterval(timer)
     }
   }, [heroImages.length])
+
+  useEffect(() => {
+    if (!isCallbackModalOpen) {
+      return
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsCallbackModalOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', handleEscape)
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape)
+    }
+  }, [isCallbackModalOpen])
+
+  const handleCallbackSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const message = `Hello Antaha Shuddhi, I would like to request a callback for enquiry.%0A%0AName: ${callbackForm.name}%0APhone: ${callbackForm.phone}%0AEmail: ${callbackForm.email || 'Not provided'}%0APreferred time: ${callbackForm.preferredTime || 'Not specified'}%0AEnquiry: ${callbackForm.enquiry || 'Not specified'}`
+
+    window.open(`https://wa.me/919650737500?text=${message}`, '_blank', 'noopener,noreferrer')
+    setIsCallbackModalOpen(false)
+    setCallbackForm(initialCallbackForm)
+  }
 
   return (
     <div className="page">
@@ -351,6 +388,115 @@ I am truly grateful for her dedication, support, and belief that it's never too 
       <footer className="site-footer">
         <p>© 2026 Antaha Shuddhi. All rights reserved.</p>
       </footer>
+
+      <button
+        className="whatsapp-fab"
+        type="button"
+        onClick={() => setIsCallbackModalOpen(true)}
+        aria-label="Open callback request form"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path
+            fill="currentColor"
+            d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.42 0 .02 5.41.02 12.05c0 2.13.56 4.2 1.62 6.03L0 24l6.08-1.59a12 12 0 0 0 5.98 1.53h.01c6.64 0 12.05-5.4 12.05-12.05a11.92 11.92 0 0 0-3.6-8.41Zm-8.45 18.42h-.01a9.95 9.95 0 0 1-5.06-1.38l-.36-.22-3.6.94.96-3.5-.24-.37a9.96 9.96 0 0 1-1.53-5.31C2.23 6.53 6.53 2.23 11.95 2.23c2.65 0 5.14 1.03 7.01 2.91a9.9 9.9 0 0 1 2.9 7.03c0 5.43-4.3 9.73-9.79 9.73Zm5.34-7.3c-.29-.14-1.72-.85-1.99-.95-.26-.1-.45-.14-.64.14-.18.29-.74.95-.9 1.15-.16.2-.32.22-.6.07-.27-.14-1.17-.43-2.22-1.37-.82-.73-1.37-1.62-1.53-1.9-.16-.29-.02-.44.12-.58.12-.12.28-.32.42-.48.14-.16.18-.28.28-.47.09-.2.04-.37-.03-.52-.08-.14-.64-1.56-.88-2.13-.23-.56-.47-.49-.64-.5h-.55c-.2 0-.51.07-.78.36-.27.29-1.03 1-1.03 2.42s1.06 2.8 1.2 2.99c.14.2 2.08 3.2 5.03 4.48.7.3 1.25.48 1.68.61.71.22 1.36.19 1.87.11.57-.09 1.72-.7 1.97-1.37.24-.67.24-1.24.17-1.37-.07-.12-.25-.2-.54-.34Z"
+          />
+        </svg>
+      </button>
+
+      {isCallbackModalOpen && (
+        <div
+          className="callback-modal-backdrop"
+          role="presentation"
+          onClick={() => setIsCallbackModalOpen(false)}
+        >
+          <div
+            className="callback-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="callback-modal-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              className="callback-modal-close"
+              type="button"
+              onClick={() => setIsCallbackModalOpen(false)}
+              aria-label="Close callback request form"
+            >
+              ×
+            </button>
+            <h3 id="callback-modal-title">Request a Call Back</h3>
+            <p className="muted">Share your details and we will connect with you shortly.</p>
+
+            <form className="form callback-form" onSubmit={handleCallbackSubmit}>
+              <label>
+                Full Name
+                <input
+                  type="text"
+                  required
+                  value={callbackForm.name}
+                  onChange={(event) =>
+                    setCallbackForm((prev) => ({ ...prev, name: event.target.value }))
+                  }
+                  placeholder="Enter your name"
+                />
+              </label>
+
+              <label>
+                Phone Number
+                <input
+                  type="tel"
+                  required
+                  value={callbackForm.phone}
+                  onChange={(event) =>
+                    setCallbackForm((prev) => ({ ...prev, phone: event.target.value }))
+                  }
+                  placeholder="Enter your phone number"
+                />
+              </label>
+
+              <label>
+                Email (optional)
+                <input
+                  type="email"
+                  value={callbackForm.email}
+                  onChange={(event) =>
+                    setCallbackForm((prev) => ({ ...prev, email: event.target.value }))
+                  }
+                  placeholder="Enter your email"
+                />
+              </label>
+
+              <label>
+                Preferred Callback Time
+                <input
+                  type="text"
+                  value={callbackForm.preferredTime}
+                  onChange={(event) =>
+                    setCallbackForm((prev) => ({ ...prev, preferredTime: event.target.value }))
+                  }
+                  placeholder="e.g. Morning, 4:00 PM"
+                />
+              </label>
+
+              <label>
+                Enquiry
+                <textarea
+                  rows={4}
+                  value={callbackForm.enquiry}
+                  onChange={(event) =>
+                    setCallbackForm((prev) => ({ ...prev, enquiry: event.target.value }))
+                  }
+                  placeholder="Tell us what you are looking for"
+                />
+              </label>
+
+              <button className="primary" type="submit">
+                Request Call Back
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
