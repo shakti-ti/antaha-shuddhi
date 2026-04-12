@@ -201,6 +201,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
               <img
                 className="class-image"
                 src="https://images.unsplash.com/photo-1600618528240-fb9fc964b853?auto=format&fit=crop&w=1200&q=80"
+                // src={withBase('mudra.jpeg')}
                 alt="Calm pranayama breathwork practice"
                 loading="lazy"
               />
