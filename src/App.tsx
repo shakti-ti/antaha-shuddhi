@@ -1,9 +1,15 @@
 import './App.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function App() {
   const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`
   const [expandedTestimonial, setExpandedTestimonial] = useState<string | null>(null)
+  const heroImages = [
+    withBase('gallery/gallery1.jpeg'),
+    withBase('gallery/gallery2.jpeg'),
+    withBase('gallery/gallery3.jpeg')
+  ]
+  const [currentHeroImage, setCurrentHeroImage] = useState(0)
 
   const testimonials = [
     {
@@ -42,6 +48,24 @@ I am truly grateful for her dedication, support, and belief that it's never too 
     setExpandedTestimonial(expandedTestimonial === id ? null : id)
   }
 
+  const goToNextHeroImage = () => {
+    setCurrentHeroImage((prev) => (prev + 1) % heroImages.length)
+  }
+
+  const goToPreviousHeroImage = () => {
+    setCurrentHeroImage((prev) => (prev - 1 + heroImages.length) % heroImages.length)
+  }
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setCurrentHeroImage((prev) => (prev + 1) % heroImages.length)
+    }, 4000)
+
+    return () => {
+      window.clearInterval(timer)
+    }
+  }, [heroImages.length])
+
   return (
     <div className="page">
       <header className="site-header">
@@ -78,11 +102,25 @@ I am truly grateful for her dedication, support, and belief that it's never too 
             </div>
           </div>
           <div className="hero-media">
+            <button
+              className="carousel-button carousel-button-prev"
+              onClick={goToPreviousHeroImage}
+              aria-label="Previous hero image"
+            >
+              ‹
+            </button>
             <img
               className="hero-image"
-              src="https://images.pexels.com/photos/4998811/pexels-photo-4998811.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
-              alt="Women practicing yoga in a bright, airy studio"
+              src={heroImages[currentHeroImage]}
+              alt="Yoga practice session at Antaha Shuddhi"
             />
+            <button
+              className="carousel-button carousel-button-next"
+              onClick={goToNextHeroImage}
+              aria-label="Next hero image"
+            >
+              ›
+            </button>
           </div>
         </section>
 
