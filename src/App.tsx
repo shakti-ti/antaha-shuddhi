@@ -118,6 +118,9 @@ I am truly grateful for her dedication, support, and belief that it's never too 
           <a href="#schedule">Schedule</a>
           <a href="#testimonials">Testimonials</a>
           <a href="#contact">Contact</a>
+          <span className="header-phone" aria-label="Phone number">
+            📞 +91 9650737500
+          </span>
         </nav>
       </header>
 
