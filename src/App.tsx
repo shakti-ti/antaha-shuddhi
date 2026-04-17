@@ -76,6 +76,21 @@ I am truly grateful for her dedication, support, and belief that it's never too 
   }, [heroImages.length])
 
   useEffect(() => {
+    const els = document.querySelectorAll('.fade-in')
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible')
+          observer.unobserve(e.target)
+        }
+      }),
+      { threshold: 0.1 }
+    )
+    els.forEach(el => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
     if (!isCallbackModalOpen) {
       return
     }
@@ -153,6 +168,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
               ‹
             </button>
             <img
+              key={currentHeroImage}
               className="hero-image"
               src={heroImages[currentHeroImage]}
               alt="Yoga practice session at Antaha Shuddhi"
@@ -177,7 +193,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
           </div>
 
           <div className="learning-stack">
-            <div className="card">
+            <div className="card fade-in">
               <h3>Holistic Yoga Practice</h3>
               <p>
                 We teach yoga as a complete practice—combining asanas,
@@ -189,7 +205,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
               </p>
             </div>
 
-            <div className="card">
+            <div className="card fade-in">
               <h3>Physical &amp; Emotional Awareness</h3>
               <p>
                 Through guided sessions, you&apos;ll learn to notice body signals,
@@ -197,7 +213,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
               </p>
             </div>
 
-            <div className="card">
+            <div className="card fade-in">
               <h3>Wellness Counseling &amp; Self-Care Guidance</h3>
               <p>
                 As certified counselors and wellness coaches, we share practical
@@ -205,7 +221,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
               </p>
             </div>
 
-            <div className="card">
+            <div className="card fade-in">
               <h3>Healing &amp; Life Coaching</h3>
               <p>
                 We blend healing practices with life coaching to help you move
@@ -221,7 +237,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
             <p>Two teachers with complementary styles to support your practice.</p>
           </div>
           <div className="trainer-grid">
-            <article className="trainer-card">
+            <article className="trainer-card fade-in">
               <img
                 className="trainer-image"
                 src={withBase('nidhi.jpeg')}
@@ -238,7 +254,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
                 life, guiding students toward lasting wellbeing.
               </p>
             </article>
-            <article className="trainer-card">
+            <article className="trainer-card fade-in">
               <img
                 className="trainer-image"
                 src={withBase('rupesh.jpeg')}
@@ -268,7 +284,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
             <p>A balanced practice for body, breath, and mind.</p>
           </div>
           <div className="grid">
-            <article className="card">
+            <article className="card fade-in">
               <img
                 className="class-image"
                 src="https://images.unsplash.com/photo-1599447421416-3414500d18a5?auto=format&fit=crop&w=1200&q=80"
@@ -278,7 +294,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
               <h3>Asanas (Postures)</h3>
               <p>To build strength, flexibility, and physical well-being.</p>
             </article>
-            <article className="card">
+            <article className="card fade-in">
               <img
                 className="class-image"
                 src="https://images.unsplash.com/photo-1600618528240-fb9fc964b853?auto=format&fit=crop&w=1200&q=80"
@@ -289,7 +305,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
               <h3>Pranayama (Breathwork)</h3>
               <p>To calm the mind, balance the nervous system, and restore the body's natural energy.</p>
             </article>
-            <article className="card">
+            <article className="card fade-in">
               <img
                 className="class-image"
                 src="https://images.unsplash.com/photo-1474418397713-7ede21d49118?auto=format&fit=crop&w=1200&q=80"
@@ -333,7 +349,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
             {testimonials.map((testimonial) => (
               <article
                 key={testimonial.id}
-                className={`testimonial-card ${expandedTestimonial === testimonial.id ? 'expanded' : ''}`}
+                className={`testimonial-card fade-in ${expandedTestimonial === testimonial.id ? 'expanded' : ''}`}
               >
                 <img
                   className="testimonial-image"
