@@ -115,7 +115,6 @@ I am truly grateful for her dedication, support, and belief that it's never too 
           <a href="#learning-approach">Learning</a>
           <a href="#about">About</a>
           <a href="#classes">Classes</a>
-          <a href="#schedule">Schedule</a>
           <a href="#testimonials">Testimonials</a>
           <a href="#contact">Contact</a>
           <span className="header-phone" aria-label="Phone number">
@@ -297,22 +296,28 @@ I am truly grateful for her dedication, support, and belief that it's never too 
               <p>To cultivate inner peace, focus, and clarity.</p>
             </article>
           </div>
+          <br>
           <p className="muted">
             Whether you are a beginner taking your first step onto the mat or
             an experienced practitioner seeking to deepen your practice, my
             approach is tailored to meet you where you are.
           </p>
-        </section>
-
-        <section id="schedule" className="section">
-          <div className="section-header">
-            <h2>Schedule</h2>
+          <div className="offer-banner">
+            <div className="offer-banner-item">
+              <span className="offer-banner-icon">🏢</span>
+              <span>Corporate Classes</span>
+            </div>
+            <div className="offer-banner-divider" />
+            <div className="offer-banner-item">
+              <span className="offer-banner-icon">💻</span>
+              <span>Online &amp; Offline</span>
+            </div>
+            <div className="offer-banner-divider" />
+            <div className="offer-banner-item">
+              <span className="offer-banner-icon">🧑‍🤝‍🧑</span>
+              <span>Group &amp; Personal Sessions</span>
+            </div>
           </div>
-          <ul className="list">
-            <li>Morning flow — 7:00 AM</li>
-            <li>Midday reset — 12:00 PM</li>
-            <li>Evening unwind — 6:30 PM</li>
-          </ul>
         </section>
 
         <section id="testimonials" className="section">

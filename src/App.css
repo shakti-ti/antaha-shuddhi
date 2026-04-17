@@ -324,6 +324,52 @@
   font: inherit;
 }
 
+.offer-banner {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.offer-banner-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 24px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-h);
+}
+
+.offer-banner-icon {
+  font-size: 20px;
+}
+
+.offer-banner-divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--border);
+}
+
+@media (max-width: 600px) {
+  .offer-banner {
+    flex-direction: column;
+  }
+
+  .offer-banner-divider {
+    width: auto;
+    height: 1px;
+    align-self: stretch;
+  }
+}
+
 .muted {
   color: var(--text-muted);
 }
