@@ -105,6 +105,10 @@ I am truly grateful for her dedication, support, and belief that it's never too 
 
   return (
     <div className="page">
+      <div className="announcement-bar">
+        <span>Teacher Training Course — YCB Level I, II &amp; III</span>
+        <a href="#contact" className="announcement-cta">Enquire Now</a>
+      </div>
       <header className="site-header">
         <div className="brand">
           <img className="brand-mark" src={withBase('favicon.png')} alt="" aria-hidden="true" />
@@ -296,7 +300,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
               <p>To cultivate inner peace, focus, and clarity.</p>
             </article>
           </div>
-          <br>
+          <br />
           <p className="muted">
             Whether you are a beginner taking your first step onto the mat or
             an experienced practitioner seeking to deepen your practice, my
