@@ -13,6 +13,7 @@ function App() {
   const [expandedTestimonial, setExpandedTestimonial] = useState<string | null>(null)
   const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false)
   const [callbackForm, setCallbackForm] = useState(initialCallbackForm)
+  const [submitState, setSubmitState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const heroImages = [
     withBase('gallery/gallery1.jpeg'),
     withBase('gallery/gallery2.jpeg'),
@@ -108,14 +109,34 @@ I am truly grateful for her dedication, support, and belief that it's never too 
     }
   }, [isCallbackModalOpen])
 
-  const handleCallbackSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleCallbackSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setSubmitState('loading')
 
-    const message = `Hello Antaha Shuddhi, I would like to request a callback for enquiry.%0A%0AName: ${callbackForm.name}%0APhone: ${callbackForm.phone}%0AEmail: ${callbackForm.email || 'Not provided'}%0APreferred time: ${callbackForm.preferredTime || 'Not specified'}%0AEnquiry: ${callbackForm.enquiry || 'Not specified'}`
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+          subject: 'New Callback Request — Antaha Shuddhi',
+          name: callbackForm.name,
+          phone: callbackForm.phone,
+          email: callbackForm.email || 'Not provided',
+          preferred_time: callbackForm.preferredTime || 'Not specified',
+          enquiry: callbackForm.enquiry || 'Not specified',
+        }),
+      })
 
-    window.open(`https://wa.me/919650737500?text=${message}`, '_blank', 'noopener,noreferrer')
-    setIsCallbackModalOpen(false)
-    setCallbackForm(initialCallbackForm)
+      if (response.ok) {
+        setSubmitState('success')
+        setCallbackForm(initialCallbackForm)
+      } else {
+        setSubmitState('error')
+      }
+    } catch {
+      setSubmitState('error')
+    }
   }
 
   return (
@@ -420,7 +441,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
       <button
         className="whatsapp-fab"
         type="button"
-        onClick={() => setIsCallbackModalOpen(true)}
+        onClick={() => { setIsCallbackModalOpen(true); setSubmitState('idle') }}
         aria-label="Open callback request form"
       >
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -447,13 +468,20 @@ I am truly grateful for her dedication, support, and belief that it's never too 
             <button
               className="callback-modal-close"
               type="button"
-              onClick={() => setIsCallbackModalOpen(false)}
+              onClick={() => { setIsCallbackModalOpen(false); setSubmitState('idle') }}
               aria-label="Close callback request form"
             >
               ×
             </button>
             <h3 id="callback-modal-title">Request a Call Back</h3>
             <p className="muted">Share your details and we will connect with you shortly.</p>
+
+            {submitState === 'success' && (
+              <p className="form-feedback form-feedback--success">Thank you! We will get back to you shortly.</p>
+            )}
+            {submitState === 'error' && (
+              <p className="form-feedback form-feedback--error">Something went wrong. Please try again or call us directly.</p>
+            )}
 
             <form className="form callback-form" onSubmit={handleCallbackSubmit}>
               <label>
@@ -518,8 +546,8 @@ I am truly grateful for her dedication, support, and belief that it's never too 
                 />
               </label>
 
-              <button className="primary" type="submit">
-                Request Call Back
+              <button className="primary" type="submit" disabled={submitState === 'loading'}>
+                {submitState === 'loading' ? 'Sending…' : 'Request Call Back'}
               </button>
             </form>
           </div>
