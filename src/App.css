@@ -242,6 +242,13 @@
   background: var(--surface);
   display: grid;
   gap: 12px;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trainer-card:hover {
+  background: #fff3e0;
+  border-color: var(--accent);
+  box-shadow: 0 6px 20px rgba(230, 145, 18, 0.15);
 }
 
 .trainer-image {
@@ -271,6 +278,13 @@
   background: var(--surface);
   display: grid;
   gap: 12px;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  background: #fff3e0;
+  border-color: var(--accent);
+  box-shadow: 0 6px 20px rgba(230, 145, 18, 0.15);
 }
 
 .learning-stack {
@@ -304,6 +318,13 @@
   background: var(--surface);
   overflow: hidden;
   display: grid;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+  background: #fff3e0;
+  border-color: var(--accent);
+  box-shadow: 0 6px 20px rgba(230, 145, 18, 0.15);
 }
 
 .testimonial-image {
