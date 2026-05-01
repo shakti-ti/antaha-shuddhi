@@ -7,6 +7,6 @@ export default defineConfig(() => ({
   base: '/',
   plugins: [
     react(),
-    babel({ presets: [reactCompilerPreset()] })
+    babel({ presets: [reactCompilerPreset()], exclude: /node_modules/ })
   ],
 }))

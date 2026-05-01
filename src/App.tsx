@@ -1,5 +1,6 @@
 import './App.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function App() {
   const initialCallbackForm = {
@@ -10,6 +11,7 @@ function App() {
     enquiry: ''
   }
   const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`
+  const visibleEls = useRef<Set<Element>>(new Set())
   const [expandedTestimonial, setExpandedTestimonial] = useState<string | null>(null)
   const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false)
   const [callbackForm, setCallbackForm] = useState(initialCallbackForm)
@@ -76,12 +78,17 @@ I am truly grateful for her dedication, support, and belief that it's never too 
     }
   }, [heroImages.length])
 
+  useLayoutEffect(() => {
+    visibleEls.current.forEach(el => el.classList.add('visible'))
+  })
+
   useEffect(() => {
     const els = document.querySelectorAll('.fade-in')
     const observer = new IntersectionObserver(
       (entries) => entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.add('visible')
+          visibleEls.current.add(e.target)
           observer.unobserve(e.target)
         }
       }),
@@ -143,7 +150,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
     <div className="page">
       <div className="announcement-bar">
         <span>Teacher Training Course — YCB Level I, II &amp; III</span>
-        <a href="#contact" className="announcement-cta">Enquire Now</a>
+        <Link to="/ycb-teacher-training" className="announcement-cta">Enquire Now</Link>
       </div>
       <header className="site-header">
         <div className="brand">
@@ -154,7 +161,14 @@ I am truly grateful for her dedication, support, and belief that it's never too 
           <a href="#home">Home</a>
           <a href="#learning-approach">Learning</a>
           <a href="#about">About</a>
-          <a href="#classes">Classes</a>
+          <div className="nav-dropdown">
+            <a href="#classes">Classes</a>
+            <div className="nav-dropdown-menu">
+              <a href="#classes-corporate">Corporate</a>
+              <a href="#classes-personal">Personal</a>
+              <Link to="/ycb-teacher-training">YCB Teacher Training</Link>
+            </div>
+          </div>
           <a href="#testimonials">Testimonials</a>
           <a href="#contact">Contact</a>
           <span className="header-phone" aria-label="Phone number">
@@ -265,7 +279,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
                 alt="Nidhi, yoga trainer"
                 loading="lazy"
               />
-              <h3>Nidhi</h3>
+              <h3>Nidhi <span className="spiritual-name">(Sn Bhakti)</span></h3>
               <p className="trainer-title">Karma Sanyasi • Yoga & holistic wellness</p>
               <p className="trainer-bio">
                 With 13+ years devoted to the art and science of yoga, Nidhi
@@ -282,7 +296,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
                 alt="Rupesh, yoga trainer"
                 loading="lazy"
               />
-              <h3>Rupesh</h3>
+              <h3>Rupesh <span className="spiritual-name">(Sn Yajnavalkya)</span></h3>
               <p className="trainer-title">
                 Karma Sanyasi • Asana, pranayama & meditation
               </p>
@@ -304,59 +318,77 @@ I am truly grateful for her dedication, support, and belief that it's never too 
             <h2>Classes</h2>
             <p>A balanced practice for body, breath, and mind.</p>
           </div>
-          <div className="grid">
-            <article className="card fade-in">
-              <img
-                className="class-image"
-                src="https://images.unsplash.com/photo-1599447421416-3414500d18a5?auto=format&fit=crop&w=1200&q=80"
-                alt="Practitioner holding a yoga asana"
-                loading="lazy"
-              />
-              <h3>Asanas (Postures)</h3>
-              <p>To build strength, flexibility, and physical well-being.</p>
-            </article>
-            <article className="card fade-in">
-              <img
-                className="class-image"
-                src="https://images.unsplash.com/photo-1600618528240-fb9fc964b853?auto=format&fit=crop&w=1200&q=80"
-                // src={withBase('mudra.jpeg')}
-                alt="Calm pranayama breathwork practice"
-                loading="lazy"
-              />
-              <h3>Pranayama (Breathwork)</h3>
-              <p>To calm the mind, balance the nervous system, and restore the body's natural energy.</p>
-            </article>
-            <article className="card fade-in">
-              <img
-                className="class-image"
-                src="https://images.unsplash.com/photo-1474418397713-7ede21d49118?auto=format&fit=crop&w=1200&q=80"
-                alt="Meditation practice in a peaceful setting"
-                loading="lazy"
-              />
-              <h3>Meditation</h3>
-              <p>To cultivate inner peace, focus, and clarity.</p>
-            </article>
-          </div>
-          <br />
-          <p className="muted">
-            Whether you are a beginner taking your first step onto the mat or
-            an experienced practitioner seeking to deepen your practice, my
-            approach is tailored to meet you where you are.
-          </p>
-          <div className="offer-banner">
-            <div className="offer-banner-item">
-              <span className="offer-banner-icon">🏢</span>
-              <span>Corporate Classes</span>
+
+          <div className="class-sections">
+            {/* Corporate */}
+            <div id="classes-corporate" className="class-subsection fade-in">
+              <div className="class-subsection-header">
+                <span className="class-subsection-icon">🏢</span>
+                <h3>Corporate</h3>
+              </div>
+              <p>
+                Workplace stress, sedentary hours, and mental fatigue are among
+                the leading causes of burnout and reduced productivity. Yoga
+                offers a science-backed antidote — improving focus,
+                reducing anxiety, and building resilience in employees at every
+                level. Regular practice leads to measurable gains in energy,
+                team morale, and overall well-being, making it one of the most
+                impactful wellness investments an organisation can make.
+              </p>
+              <ul className="class-offerings">
+                <li>On-site corporate yoga sessions</li>
+                <li>Customised programmes for teams and leadership</li>
+                <li>Stress management and breathwork workshops</li>
+              </ul>
             </div>
-            <div className="offer-banner-divider" />
-            <div className="offer-banner-item">
-              <span className="offer-banner-icon">💻</span>
-              <span>Online &amp; Offline</span>
+
+            <div className="class-subsection-divider" />
+
+            {/* Personal */}
+            <div id="classes-personal" className="class-subsection fade-in">
+              <div className="class-subsection-header">
+                <span className="class-subsection-icon">🧘</span>
+                <h3>Personal</h3>
+              </div>
+              <p>
+                Yoga is one of the most powerful tools for personal
+                transformation — cultivating self-awareness, emotional balance,
+                and physical vitality. Whether you are seeking relief from
+                stress, a deeper spiritual connection, or simply a healthier
+                body, a consistent yoga practice meets you exactly where you
+                are and grows with you over time.
+              </p>
+              <ul className="class-offerings">
+                <li>One-on-one personal sessions</li>
+                <li>Group classes</li>
+                <li>Online &amp; offline options available</li>
+              </ul>
             </div>
-            <div className="offer-banner-divider" />
-            <div className="offer-banner-item">
-              <span className="offer-banner-icon">🧑‍🤝‍🧑</span>
-              <span>Group &amp; Personal Sessions</span>
+
+            <div className="class-subsection-divider" />
+
+            {/* YCB */}
+            <div className="class-subsection fade-in">
+              <div className="class-subsection-header">
+                <span className="class-subsection-icon">🎓</span>
+                <h3>YCB Teacher Training</h3>
+              </div>
+              <p>
+                Government-Certified Yoga Teacher Training under the Yoga
+                Certification Board (YCB), Ministry of AYUSH, Government of
+                India. Our structured programme prepares aspiring teachers
+                through rigorous training in asana, pranayama, philosophy, and
+                teaching methodology — with clear pathways to certification at
+                all three levels.
+              </p>
+              <ul className="class-offerings">
+                <li>YCB Level I — Foundation</li>
+                <li>YCB Level II — Intermediate</li>
+                <li>YCB Level III — Advanced</li>
+              </ul>
+              <Link to="/ycb-teacher-training" className="class-learn-more">
+                Learn more about YCB Teacher Training →
+              </Link>
             </div>
           </div>
         </section>
