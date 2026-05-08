@@ -180,7 +180,6 @@ I am truly grateful for her dedication, support, and belief that it's never too 
       <main>
         <section id="home" className="hero">
           <div className="hero-text">
-            <p className="eyebrow">Antaha Shuddhi</p>
             <h1>Discover Your Inner Peace</h1>
             <p className="subtext">
               Transform your life through the ancient practice of yoga. Join Antaha Shuddhi and embark on a journey to wellness, balance, and self-discovery.

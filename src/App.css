@@ -162,6 +162,13 @@
   font-weight: 700;
   font-size: 15px;
   padding: 6px 12px;
+  text-decoration: none;
+}
+
+.header-phone:hover {
+  color: var(--accent);
+  background: rgba(230, 145, 18, 0.1);
+  border-radius: 8px;
 }
 
 .hero {
@@ -728,7 +735,9 @@
 @media (max-width: 720px) {
   .site-header {
     flex-direction: column;
-    gap: 16px;
+    height: auto;
+    padding: 12px 4vw;
+    gap: 8px;
   }
 
   .hero-media,
@@ -739,6 +748,22 @@
   .nav {
     flex-wrap: wrap;
     justify-content: center;
+    gap: 2px;
+  }
+
+  .header-phone {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    padding: 8px 12px;
+    background: rgba(230, 145, 18, 0.08);
+    border-radius: 8px;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .trainer-image {
+    height: 360px;
   }
 
   .whatsapp-fab {
