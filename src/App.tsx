@@ -19,7 +19,9 @@ function App() {
   const heroImages = [
     withBase('gallery/gallery1.jpeg'),
     withBase('gallery/gallery2.jpeg'),
-    withBase('gallery/gallery3.jpeg')
+    withBase('gallery/gallery3.jpeg'),
+    withBase('gallery/gallery4.jpeg'),
+    withBase('gallery/gallery5.jpeg')
   ]
   const [currentHeroImage, setCurrentHeroImage] = useState(0)
 
