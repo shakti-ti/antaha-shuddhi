@@ -624,7 +624,8 @@
   font-size: 14px;
 }
 
-.whatsapp-fab {
+.whatsapp-fab,
+.whatsapp-chat-fab {
   position: fixed;
   right: 24px;
   bottom: 24px;
@@ -643,17 +644,23 @@
   transition: background 0.2s ease, transform 0.15s ease;
 }
 
+.whatsapp-chat-fab {
+  bottom: 96px;
+}
+
 @keyframes fabPulse {
   0%, 100% { box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2); }
   50% { box-shadow: 0 10px 32px rgba(37, 211, 102, 0.5); }
 }
 
-.whatsapp-fab svg {
+.whatsapp-fab svg,
+.whatsapp-chat-fab svg {
   width: 30px;
   height: 30px;
 }
 
-.whatsapp-fab:hover {
+.whatsapp-fab:hover,
+.whatsapp-chat-fab:hover {
   background: #1eb757;
   transform: scale(1.07);
   animation: none;
@@ -766,10 +773,15 @@
     height: 360px;
   }
 
-  .whatsapp-fab {
+  .whatsapp-fab,
+  .whatsapp-chat-fab {
     right: 16px;
     bottom: 16px;
     width: 56px;
     height: 56px;
+  }
+
+  .whatsapp-chat-fab {
+    bottom: 84px;
   }
 }
