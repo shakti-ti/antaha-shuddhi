@@ -443,6 +443,16 @@ I am truly grateful for her dedication, support, and belief that it's never too 
               <p className="muted">Phone: 9650737500, 9650747500</p>
               <p className="muted">Email: antahashuddhi@gmail.com</p>
               <p className="muted">
+                Facebook:{' '}
+                <a
+                  href="https://www.facebook.com/people/Antaha-Suddhi-Yoga/100063633592983/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Antaha Suddhi Yoga
+                </a>
+              </p>
+              <p className="muted">
                 Instagram:{' '}
                 <a
                   href="https://www.instagram.com/antaha.shuddhi"
