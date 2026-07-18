@@ -108,7 +108,12 @@ export default function YCBPage() {
             and internationally recognized, adding a layer of trust and credibility to your
             professional profile.
           </p>
-          <a href="/#contact" className="primary ycb-cta">
+          <a
+            href="https://docs.google.com/forms/d/11DmxizqqO5ttx_jr2SyQMrU7oKuiBhYNw-egS68QDLI/viewform?edit_requested=true"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="primary ycb-cta"
+          >
             Enquire Now
           </a>
         </section>

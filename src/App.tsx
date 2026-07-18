@@ -3,19 +3,9 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function App() {
-  const initialCallbackForm = {
-    name: '',
-    phone: '',
-    email: '',
-    preferredTime: '',
-    enquiry: ''
-  }
   const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`
   const visibleEls = useRef<Set<Element>>(new Set())
   const [expandedTestimonial, setExpandedTestimonial] = useState<string | null>(null)
-  const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false)
-  const [callbackForm, setCallbackForm] = useState(initialCallbackForm)
-  const [submitState, setSubmitState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const heroImages = [
     withBase('gallery/gallery1.jpeg'),
     withBase('gallery/gallery2.jpeg'),
@@ -100,59 +90,11 @@ I am truly grateful for her dedication, support, and belief that it's never too 
     return () => observer.disconnect()
   }, [])
 
-  useEffect(() => {
-    if (!isCallbackModalOpen) {
-      return
-    }
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsCallbackModalOpen(false)
-      }
-    }
-
-    window.addEventListener('keydown', handleEscape)
-
-    return () => {
-      window.removeEventListener('keydown', handleEscape)
-    }
-  }, [isCallbackModalOpen])
-
-  const handleCallbackSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setSubmitState('loading')
-
-    try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
-          subject: 'New Callback Request — Antaha Shuddhi',
-          name: callbackForm.name,
-          phone: callbackForm.phone,
-          email: callbackForm.email || 'Not provided',
-          preferred_time: callbackForm.preferredTime || 'Not specified',
-          enquiry: callbackForm.enquiry || 'Not specified',
-        }),
-      })
-
-      if (response.ok) {
-        setSubmitState('success')
-        setCallbackForm(initialCallbackForm)
-      } else {
-        setSubmitState('error')
-      }
-    } catch {
-      setSubmitState('error')
-    }
-  }
-
   return (
     <div className="page">
       <div className="announcement-bar">
         <span>Teacher Training Course — YCB Level I, II &amp; III</span>
-        <Link to="/ycb-teacher-training" className="announcement-cta">Enquire Now</Link>
+        <Link to="/ycb-teacher-training" className="announcement-cta">Know More</Link>
       </div>
       <header className="site-header">
         <div className="brand">
@@ -496,11 +438,12 @@ I am truly grateful for her dedication, support, and belief that it's never too 
         </svg>
       </a>
 
-      <button
+      <a
         className="whatsapp-fab"
-        type="button"
-        onClick={() => { setIsCallbackModalOpen(true); setSubmitState('idle') }}
-        aria-label="Open callback request form"
+        href="https://docs.google.com/forms/d/11DmxizqqO5ttx_jr2SyQMrU7oKuiBhYNw-egS68QDLI/viewform?edit_requested=true"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Request a call back"
       >
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path
@@ -508,109 +451,7 @@ I am truly grateful for her dedication, support, and belief that it's never too 
             d="M12 2C6.48 2 2 6.03 2 11c0 2.06.78 3.96 2.09 5.48L3 22l5.7-1.5A10.6 10.6 0 0 0 12 21c5.52 0 10-4.03 10-9s-4.48-10-10-10Zm-1 5h2v6h-2V7Zm0 8h2v2h-2v-2Z"
           />
         </svg>
-      </button>
-
-      {isCallbackModalOpen && (
-        <div
-          className="callback-modal-backdrop"
-          role="presentation"
-          onClick={() => setIsCallbackModalOpen(false)}
-        >
-          <div
-            className="callback-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="callback-modal-title"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              className="callback-modal-close"
-              type="button"
-              onClick={() => { setIsCallbackModalOpen(false); setSubmitState('idle') }}
-              aria-label="Close callback request form"
-            >
-              ×
-            </button>
-            <h3 id="callback-modal-title">Request a Call Back</h3>
-            <p className="muted">Share your details and we will connect with you shortly.</p>
-
-            {submitState === 'success' && (
-              <p className="form-feedback form-feedback--success">Thank you! We will get back to you shortly.</p>
-            )}
-            {submitState === 'error' && (
-              <p className="form-feedback form-feedback--error">Something went wrong. Please try again or call us directly.</p>
-            )}
-
-            <form className="form callback-form" onSubmit={handleCallbackSubmit}>
-              <label>
-                Full Name
-                <input
-                  type="text"
-                  required
-                  value={callbackForm.name}
-                  onChange={(event) =>
-                    setCallbackForm((prev) => ({ ...prev, name: event.target.value }))
-                  }
-                  placeholder="Enter your name"
-                />
-              </label>
-
-              <label>
-                Phone Number
-                <input
-                  type="tel"
-                  required
-                  value={callbackForm.phone}
-                  onChange={(event) =>
-                    setCallbackForm((prev) => ({ ...prev, phone: event.target.value }))
-                  }
-                  placeholder="Enter your phone number"
-                />
-              </label>
-
-              <label>
-                Email (optional)
-                <input
-                  type="email"
-                  value={callbackForm.email}
-                  onChange={(event) =>
-                    setCallbackForm((prev) => ({ ...prev, email: event.target.value }))
-                  }
-                  placeholder="Enter your email"
-                />
-              </label>
-
-              <label>
-                Preferred Callback Time
-                <input
-                  type="text"
-                  value={callbackForm.preferredTime}
-                  onChange={(event) =>
-                    setCallbackForm((prev) => ({ ...prev, preferredTime: event.target.value }))
-                  }
-                  placeholder="e.g. Morning, 4:00 PM"
-                />
-              </label>
-
-              <label>
-                Enquiry
-                <textarea
-                  rows={4}
-                  value={callbackForm.enquiry}
-                  onChange={(event) =>
-                    setCallbackForm((prev) => ({ ...prev, enquiry: event.target.value }))
-                  }
-                  placeholder="Tell us what you are looking for"
-                />
-              </label>
-
-              <button className="primary" type="submit" disabled={submitState === 'loading'}>
-                {submitState === 'loading' ? 'Sending…' : 'Request Call Back'}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+      </a>
     </div>
   )
 }
